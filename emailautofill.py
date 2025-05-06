@@ -3,25 +3,29 @@
 import streamlit as st
 import datetime
 
+# Constants for time slots and appointment types
+TIME_SLOTS = ["AD (8am - 5pm)", "AM (8am - 12pm)", "PM (1pm - 5pm)"]
+APPOINTMENT_TYPES = [
+    "DF Mex", "Elec Mex", "Gas Mex", "Elec New Conn", 
+    "Gas New Conn", "DF new conn", "On-Site comms", "Other"
+]
+
 st.title("Appointment Email Generator")
 
 # Date input with default value
 date = st.date_input("Appointment date", datetime.date.today())
 
 # Format the date as DD/MM/YYYY for display purposes
-formatted_date_input = date.strftime('%d/%m/%Y')
+formatted_date = date.strftime('%d/%m/%Y')
 
 # Display the formatted date
-st.write(f"Selected date (formatted): {formatted_date_input}")
+st.write(f"Selected date (formatted): {formatted_date}")
 
 # Time slot select box
-time_slot = st.selectbox("Time slot", ["AD (8am - 5pm)", "AM (8am - 12pm)", "PM (1pm - 5pm)"])
+time_slot = st.selectbox("Time slot", TIME_SLOTS)
 
 # Appointment type select box
-appointment_type = st.selectbox(
-    "Appointment type",
-    ["DF Mex", "Elec Mex", "Gas Mex", "Elec New Conn", "Gas New Conn", "DF new conn", "On-Site comms", "Other"]
-)
+appointment_type = st.selectbox("Appointment type", APPOINTMENT_TYPES)
 
 # User's name input
 your_name = st.text_input("Your name")
@@ -29,53 +33,56 @@ your_name = st.text_input("Your name")
 # Button to trigger email generation
 generate = st.button("Generate email")
 
-if generate and your_name:
-    # Mapping for time slots
-    time_mapping = {"AD": "8am - 5pm", "AM": "8am - 12pm", "PM": "1pm - 5pm"}
-    time_key = time_slot.split(" ")[0]
-    time_value = time_mapping.get(time_key, "a selected time")
+if generate:
+    if not your_name:
+        st.error("Please enter your name.")
+    else:
+        # Mapping for time slots
+        time_mapping = {
+            "AD": "8am - 5pm",
+            "AM": "8am - 12pm",
+            "PM": "1pm - 5pm"
+        }
+        time_value = time_mapping.get(time_slot[:2], "a selected time")  # Extract first 2 chars as key
 
-    # Mapping for appointment types
-    appointment_mapping = {
-        "DF Mex": "gas and electric meter exchange",
-        "Elec Mex": "electric meter exchange",
-        "Gas Mex": "gas meter exchange",
-        "Elec New Conn": "electric new connection",
-        "Gas New Conn": "gas new connection",
-        "DF new conn": "gas and electric new connection",
-        "On-Site comms": "on-site commissioning appointment for your smart meters",
-        "Other": "custom appointment"
-    }
+        # Mapping for appointment types
+        appointment_mapping = {
+            "DF Mex": "gas and electric meter exchange",
+            "Elec Mex": "electric meter exchange",
+            "Gas Mex": "gas meter exchange",
+            "Elec New Conn": "electric new connection",
+            "Gas New Conn": "gas new connection",
+            "DF new conn": "gas and electric new connection",
+            "On-Site comms": "on-site commissioning appointment for your smart meters",
+            "Other": "custom appointment"
+        }
 
-    # Additional info based on appointment type
-    additional_info = {
-        "DF Mex": "- Most jobs take around 2 hours (1 hour per meter). Your electricity and gas will need to be switched off for up to an hour.",
-        "Elec Mex": "- Most jobs take around 1 hour. Your electricity will need to be switched off for up to an hour.",
-        "Gas Mex": "- Most jobs take around 1 hour. Your gas will need to be switched off for up to an hour.",
-        "Elec New Conn": "- Most jobs take around 1 hour.\n- You will need an electrician to connect the meter to the property after our engineer attends.",
-        "Gas New Conn": "- Most jobs take around 1 hour.\n- You will need a gas safety engineer to uncap the gas after our engineer attends.",
-        "DF new conn": "- Most jobs take around 2 hours (1 hour per meter).\n- You will need both an electrician and a gas safety engineer to connect/un-cap after our engineer attends.",
-        "On-Site comms": "",
-        "Other": ""
-    }
+        # Additional info based on appointment type
+        additional_info = {
+            "DF Mex": "- Most jobs take around 2 hours (1 hour per meter). Your electricity and gas will need to be switched off for up to an hour.",
+            "Elec Mex": "- Most jobs take around 1 hour. Your electricity will need to be switched off for up to an hour.",
+            "Gas Mex": "- Most jobs take around 1 hour. Your gas will need to be switched off for up to an hour.",
+            "Elec New Conn": "- Most jobs take around 1 hour.\n- You will need an electrician to connect the meter to the property after our engineer attends.",
+            "Gas New Conn": "- Most jobs take around 1 hour.\n- You will need a gas safety engineer to uncap the gas after our engineer attends.",
+            "DF new conn": "- Most jobs take around 2 hours (1 hour per meter).\n- You will need both an electrician and a gas safety engineer to connect/un-cap after our engineer attends.",
+            "On-Site comms": "",
+            "Other": ""
+        }
 
-    # Fetching appointment type and additional info
-    appointment_desc = appointment_mapping.get(appointment_type, "an appointment")
-    additional = additional_info.get(appointment_type, "")
+        # Fetching appointment type and additional info
+        appointment_desc = appointment_mapping.get(appointment_type, "an appointment")
+        additional = additional_info.get(appointment_type, "")
 
-    # Format the date for the email as DD/MM/YYYY
-    formatted_date_email = date.strftime('%d/%m/%Y')
+        # Generating email content
+        email = f"""Hi,
 
-    # Generating email content
-    email = f"""Hi,
-
-Thank you for speaking with me and I'm glad we could get you booked in for a {appointment_desc}. As requested, we’ve booked your metering appointment for {formatted_date_email} between {time_value}.
+Thank you for speaking with me and I'm glad we could get you booked in for a {appointment_desc}. As requested, we’ve booked your metering appointment for {formatted_date} between {time_value}.
 
 Just in regards to your appointment, here’s some additional information, and if any of these cause any issues, then give us a call or email.
 
 {additional}
 - Our engineer will give 30 minutes notice before their arrival.
-- We’ll need someone over the age of 18 in the house throughout your appointment, even if your meter is located externally. This is so we can complete our safety checks inside your house before and after the work is completed. The person present doesn’t necessarily need to be the owner/occupier of the property. It can be a friend, neighbour or a family member.
+- We’ll need someone over the age of 18 in the house throughout your appointment, even if your meter is located externally. This is so we can complete our safety checks inside your house before and after the installation or exchange.
 - The engineer will need somewhere close by to park.
 - If there are any obstructions / if the engineer will need a ladder to reach your meters, please let us know. The maximum height our engineers can work at is 7.2ft.
 - If you have a dog, please ensure that it is securely kept away from the area where our engineer will be working.
@@ -90,20 +97,13 @@ Octopus Energy Services
 Feedback/Queries Email: hello@octoes.com
 """
 
-    # Display the generated email in a text area
-    email_text_area = st.text_area("Generated Email", value=email, height=400)
+        # Display the generated email in a text area
+        st.text_area("Generated Email", value=email, height=400)
 
-    # JavaScript to copy to clipboard
-    copy_button = """
-    <script>
-        function copyToClipboard() {
-            var copyText = document.getElementById("email-text");
-            copyText.select();
-            document.execCommand("copy");
-        }
-    </script>
-    <button onclick="copyToClipboard()">Copy Email to Clipboard</button>
-    """
-    
-    st.markdown(copy_button, unsafe_allow_html=True)
-
+        # Adding a download button instead of unsafe JavaScript
+        st.download_button(
+            label="Download Email as Text",
+            data=email,
+            file_name="generated_email.txt",
+            mime="text/plain"
+        )
