@@ -7,11 +7,12 @@ st.set_page_config(page_title="Email Generator", layout="centered")
 st.title("Appointment Email Generator")
 
 # --- User Inputs ---
+name = st.text_input("Enter the name")
 appointment_date = st.date_input(
     "Select appointment date", 
     datetime.date(2025, 5, 6),
-    format="DD/MM/YYYY")
-time_slot = st.selectbox("Time Slot", ["AD (8am-5pm)", "AM (8am-12pm)", "PM (1pm-5pm)"])
+    format="DD/MM/YYYY"
+)
 appointment_type = st.selectbox(
     "Appointment Type",
     [
