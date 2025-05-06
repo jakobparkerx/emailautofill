@@ -3,8 +3,8 @@ import streamlit as st
 import streamlit.components.v1 as components
 from datetime import datetime
 
-st.set_page_config(page_title="Octopus Email Generator", layout="centered")
-st.title("Octopus Energy – Appointment Email Generator")
+st.set_page_config(page_title="Email Generator", layout="centered")
+st.title("Appointment Email Generator")
 
 # --- User Inputs ---
 appointment_date = st.date_input("Appointment Date")
