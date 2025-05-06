@@ -3,16 +3,16 @@
 import streamlit as st
 import datetime
 
-st.title("Octopus Energy - Appointment Email Generator")
+st.title("Appointment Email Generator")
 
-# Date input with format as DD/MM/YYYY
+# Date input with default value
 date = st.date_input("Appointment date", datetime.date.today())
 
-# Format the date to display as DD/MM/YYYY
+# Format the date as DD/MM/YYYY for display purposes
 formatted_date_input = date.strftime('%d/%m/%Y')
 
 # Display the formatted date
-st.write(f"Selected date: {formatted_date_input}")
+st.write(f"Selected date (formatted): {formatted_date_input}")
 
 # Time slot select box
 time_slot = st.selectbox("Time slot", ["AD (8am - 5pm)", "AM (8am - 12pm)", "PM (1pm - 5pm)"])
@@ -63,13 +63,13 @@ if generate and your_name:
     appointment_desc = appointment_mapping.get(appointment_type, "an appointment")
     additional = additional_info.get(appointment_type, "")
 
-    # Date formatted as DD/MM/YYYY
-    formatted_date = date.strftime('%d/%m/%Y')
+    # Format the date for the email as DD/MM/YYYY
+    formatted_date_email = date.strftime('%d/%m/%Y')
 
     # Generating email content
     email = f"""Hi,
 
-Thank you for speaking with me and I'm glad we could get you booked in for a {appointment_desc}. As requested, we’ve booked your metering appointment for {formatted_date} between {time_value}.
+Thank you for speaking with me and I'm glad we could get you booked in for a {appointment_desc}. As requested, we’ve booked your metering appointment for {formatted_date_email} between {time_value}.
 
 Just in regards to your appointment, here’s some additional information, and if any of these cause any issues, then give us a call or email.
 
@@ -90,6 +90,20 @@ Octopus Energy Services
 Feedback/Queries Email: hello@octoes.com
 """
 
-    # Display the generated email
-    st.text_area("Generated Email", value=email, height=400)
+    # Display the generated email in a text area
+    email_text_area = st.text_area("Generated Email", value=email, height=400)
+
+    # JavaScript to copy to clipboard
+    copy_button = """
+    <script>
+        function copyToClipboard() {
+            var copyText = document.getElementById("email-text");
+            copyText.select();
+            document.execCommand("copy");
+        }
+    </script>
+    <button onclick="copyToClipboard()">Copy Email to Clipboard</button>
+    """
+    
+    st.markdown(copy_button, unsafe_allow_html=True)
 
