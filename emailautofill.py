@@ -33,12 +33,6 @@ appointment_type = st.selectbox("Appointment type", APPOINTMENT_TYPES)
 # User's name input
 your_name = st.text_input("Your name")
 
-# New functionality: Path input and copy-paste option
-pathinput = st.text_input("Enter your Path:")
-Path = f'''{pathinput}'''
-st.code(Path, language="python")
-st.markdown("Now you get option to copy")
-
 # Button to trigger email generation
 generate = st.button("Generate email")
 
@@ -90,7 +84,7 @@ Just in regards to your appointment, here’s some additional information, and i
 
 {additional}
 - Our engineer will give 30 minutes notice before their arrival.
-- We’ll need someone over the age of 18 in the house throughout your appointment, even if your meter is located externally. This is so we can complete our safety checks inside your house before [...]
+- We’ll need someone over the age of 18 in the house throughout your appointment, even if your meter is located externally. This is so we can complete our safety checks inside your house before leaving.
 - The engineer will need somewhere close by to park.
 - If there are any obstructions / if the engineer will need a ladder to reach your meters, please let us know. The maximum height our engineers can work at is 7.2ft.
 - If you have a dog, please ensure that it is securely kept away from the area where our engineer will be working.
@@ -114,10 +108,23 @@ Feedback/Queries Email: hello@octoes.com
             with open("error.log", "a") as log_file:
                 log_file.write(f"Error: {str(e)}\n")
 
-copy_button = """
-    <button onclick="navigator.clipboard.writeText(document.querySelector('textarea[data-streamlit-key=email_text]').value)">
-        📋 Copy to clipboard
-    </button>
-"""
-st.markdown(copy_button, unsafe_allow_html=True)
+# Add a "Copy to Clipboard" button using JavaScript
+st.markdown(
+    """
+    <button onclick="copyToClipboard()">Copy to Clipboard</button>
+    <script>
+    function copyToClipboard() {
+        const textArea = document.querySelector('textarea[data-testid="stTextArea"]');
+        if (textArea) {
+            navigator.clipboard.writeText(textArea.value).then(() => {
+                alert('Copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+    }
+    </script>
+    """, 
+    unsafe_allow_html=True
+)
 
