@@ -7,7 +7,7 @@ import datetime
 TIME_SLOTS = ["AD (8am - 5pm)", "AM (8am - 12pm)", "PM (1pm - 5pm)"]
 APPOINTMENT_TYPES = [
     "DF Mex", "Elec Mex", "Gas Mex", "Elec New Conn", 
-    "Gas New Conn", "DF new conn", "On-Site comms", "Other"
+    "Gas New Conn", "DF new conn", "On-Site comms"
 ]
 
 st.title("Appointment Email Generator")
@@ -47,14 +47,13 @@ if generate:
 
         # Mapping for appointment types
         appointment_mapping = {
-            "DF Mex": "gas and electric meter exchange",
-            "Elec Mex": "electric meter exchange",
-            "Gas Mex": "gas meter exchange",
-            "Elec New Conn": "electric new connection",
-            "Gas New Conn": "gas new connection",
-            "DF new conn": "gas and electric new connection",
-            "On-Site comms": "on-site commissioning appointment for your smart meters",
-            "Other": "custom appointment"
+            "DF Mex": "a gas and electric meter exchange",
+            "Elec Mex": "an electric meter exchange",
+            "Gas Mex": "a gas meter exchange",
+            "Elec New Conn": "an electric new connection",
+            "Gas New Conn": "a gas new connection",
+            "DF new conn": "a gas and electric new connection",
+            "On-Site comms": "an on-site commissioning appointment for your smart meters"
         }
 
         # Additional info based on appointment type
@@ -76,7 +75,7 @@ if generate:
         # Generating email content
         email = f"""Hi,
 
-Thank you for speaking with me and I'm glad we could get you booked in for a {appointment_desc}. As requested, we’ve booked your metering appointment for {formatted_date} between {time_value}.
+Thank you for speaking with me and I'm glad we could get you booked in for {appointment_desc}. As requested, we’ve booked your metering appointment for {formatted_date} between {time_value}.
 
 Just in regards to your appointment, here’s some additional information, and if any of these cause any issues, then give us a call or email.
 
@@ -96,9 +95,6 @@ Field Team Support Specialist
 Octopus Energy Services  
 Feedback/Queries Email: hello@octoes.com
 """
-
-        # Display the generated email in a text area
-        st.text_area("Generated Email", value=email, height=400)
 
 # Display the generated email in a text area
 st.text_area("Generated Email", value=email, height=400, key="email_text_area")
