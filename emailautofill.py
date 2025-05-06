@@ -2,6 +2,9 @@
 
 import streamlit as st
 import datetime
+import logging
+
+logging.getLogger('streamlit').setLevel(logging.ERROR)
 
 # Constants for time slots and appointment types
 TIME_SLOTS = ["AD (8am - 5pm)", "AM (8am - 12pm)", "PM (1pm - 5pm)"]
