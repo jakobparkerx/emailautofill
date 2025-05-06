@@ -8,6 +8,12 @@ st.title("Octopus Energy - Appointment Email Generator")
 # Date input with format as DD/MM/YYYY
 date = st.date_input("Appointment date", datetime.date.today())
 
+# Format the date to display as DD/MM/YYYY
+formatted_date_input = date.strftime('%d/%m/%Y')
+
+# Display the formatted date
+st.write(f"Selected date: {formatted_date_input}")
+
 # Time slot select box
 time_slot = st.selectbox("Time slot", ["AD (8am - 5pm)", "AM (8am - 12pm)", "PM (1pm - 5pm)"])
 
