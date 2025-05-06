@@ -1,58 +1,73 @@
+# emailautofill.py
+
 import streamlit as st
 import datetime
 
-# Add a header to the app
-st.title("Email Autofill for Appointment Confirmation")
+st.title("Octopus Energy - Appointment Email Generator")
 
-# Streamlit widgets for user input
-name = st.text_input("Enter the name")
-appointment_date = st.date_input(
-    "Select appointment date", 
-    datetime.date(2025, 5, 6),
-    format="DD/MM/YYYY"
-)
+# Date input with format as DD/MM/YYYY
+date = st.date_input("Appointment date", datetime.date.today())
+
+# Time slot select box
+time_slot = st.selectbox("Time slot", ["AD (8am - 5pm)", "AM (8am - 12pm)", "PM (1pm - 5pm)"])
+
+# Appointment type select box
 appointment_type = st.selectbox(
-    "Select the appointment type",
+    "Appointment type",
     ["DF Mex", "Elec Mex", "Gas Mex", "Elec New Conn", "Gas New Conn", "DF new conn", "On-Site comms", "Other"]
 )
-time_slot = st.selectbox(
-    "Select the time slot",
-    ["AD", "AM", "PM"]
-)
 
-# Formatting the appointment date
-appointment_date_str = appointment_date.strftime("%d/%m/%Y")
+# User's name input
+your_name = st.text_input("Your name")
 
-# Define the email template
-email_body = f"""
-Hi {name},
+# Button to trigger email generation
+generate = st.button("Generate email")
 
-Thank you for speaking with me and I'm glad we could get you booked in for a {appointment_type} appointment. 
-As requested, we’ve booked your metering appointment for {appointment_date_str} between {time_slot}.
+if generate and your_name:
+    # Mapping for time slots
+    time_mapping = {"AD": "8am - 5pm", "AM": "8am - 12pm", "PM": "1pm - 5pm"}
+    time_key = time_slot.split(" ")[0]
+    time_value = time_mapping.get(time_key, "a selected time")
+
+    # Mapping for appointment types
+    appointment_mapping = {
+        "DF Mex": "gas and electric meter exchange",
+        "Elec Mex": "electric meter exchange",
+        "Gas Mex": "gas meter exchange",
+        "Elec New Conn": "electric new connection",
+        "Gas New Conn": "gas new connection",
+        "DF new conn": "gas and electric new connection",
+        "On-Site comms": "on-site commissioning appointment for your smart meters",
+        "Other": "custom appointment"
+    }
+
+    # Additional info based on appointment type
+    additional_info = {
+        "DF Mex": "- Most jobs take around 2 hours (1 hour per meter). Your electricity and gas will need to be switched off for up to an hour.",
+        "Elec Mex": "- Most jobs take around 1 hour. Your electricity will need to be switched off for up to an hour.",
+        "Gas Mex": "- Most jobs take around 1 hour. Your gas will need to be switched off for up to an hour.",
+        "Elec New Conn": "- Most jobs take around 1 hour.\n- You will need an electrician to connect the meter to the property after our engineer attends.",
+        "Gas New Conn": "- Most jobs take around 1 hour.\n- You will need a gas safety engineer to uncap the gas after our engineer attends.",
+        "DF new conn": "- Most jobs take around 2 hours (1 hour per meter).\n- You will need both an electrician and a gas safety engineer to connect/un-cap after our engineer attends.",
+        "On-Site comms": "",
+        "Other": ""
+    }
+
+    # Fetching appointment type and additional info
+    appointment_desc = appointment_mapping.get(appointment_type, "an appointment")
+    additional = additional_info.get(appointment_type, "")
+
+    # Date formatted as DD/MM/YYYY
+    formatted_date = date.strftime('%d/%m/%Y')
+
+    # Generating email content
+    email = f"""Hi,
+
+Thank you for speaking with me and I'm glad we could get you booked in for a {appointment_desc}. As requested, we’ve booked your metering appointment for {formatted_date} between {time_value}.
 
 Just in regards to your appointment, here’s some additional information, and if any of these cause any issues, then give us a call or email.
 
-"""
-
-# Add specific information based on the appointment type
-if appointment_type == "DF Mex":
-    email_body += "- Most jobs take around 2 hours, which is an hour for each meter (if you only have an electricity meter it will take around an hour). Your electricity and gas will need to be switched off for up to an hour during this period.\n"
-elif appointment_type == "Elec Mex":
-    email_body += "- Most jobs take around 1 hour. Your electricity will need to be switched off for up to an hour during this period.\n"
-elif appointment_type == "Gas Mex":
-    email_body += "- Most jobs take around 1 hour. Your gas will need to be switched off for up to an hour during this period.\n"
-elif appointment_type == "Elec New Conn":
-    email_body += "- Most jobs take around 1 hour.\n- You will need an electrician to attend after our engineer to connect the meter to the rest of the property.\n"
-elif appointment_type == "Gas New Conn":
-    email_body += "- Most jobs take around 1 hour.\n- You will need a gas safety engineer to attend after our engineer to uncap the gas.\n"
-elif appointment_type == "DF new conn":
-    email_body += "- Most jobs take around 2 hours, which is an hour for each meter.\n- You will need an electrician and a gas safety engineer to attend after our engineer to connect the electric meter to the rest of the property and to uncap the gas.\n"
-elif appointment_type == "On-Site comms":
-    email_body += "\n"
-else:
-    email_body += "- Custom appointment details.\n"
-
-email_body += """
+{additional}
 - Our engineer will give 30 minutes notice before their arrival.
 - We’ll need someone over the age of 18 in the house throughout your appointment, even if your meter is located externally. This is so we can complete our safety checks inside your house before and after the work is completed. The person present doesn’t necessarily need to be the owner/occupier of the property. It can be a friend, neighbour or a family member.
 - The engineer will need somewhere close by to park.
@@ -61,24 +76,14 @@ email_body += """
 
 If you have any questions between now and your appointment, please email us at hello@octoes.com.
 
-Kind regards,
-{name}
+Kind regards,  
+{your_name}
 
-Field Team Support Specialist
-Octopus Energy Services
+Field Team Support Specialist  
+Octopus Energy Services  
 Feedback/Queries Email: hello@octoes.com
 """
 
-# Display the generated email template
-st.subheader("Generated Email")
-st.text_area("Copy this email", value=email_body, height=300)
-
-# Optional: Add a copy-to-clipboard button
-st.download_button(
-    label="Copy to clipboard",
-    data=email_body,
-    file_name="email_template.txt",
-    mime="text/plain"
-)
-
+    # Display the generated email
+    st.text_area("Generated Email", value=email, height=400)
 
