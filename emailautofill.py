@@ -100,10 +100,23 @@ Feedback/Queries Email: hello@octoes.com
         # Display the generated email in a text area
         st.text_area("Generated Email", value=email, height=400)
 
-        # Adding a download button instead of unsafe JavaScript
-        st.download_button(
-            label="Download Email as Text",
-            data=email,
-            file_name="generated_email.txt",
-            mime="text/plain"
-        )
+# Display the generated email in a text area
+st.text_area("Generated Email", value=email, height=400, key="email_text_area")
+
+# Add a "Copy to Clipboard" button using JavaScript
+st.markdown(
+    """
+    <button onclick="copyToClipboard()">Copy to Clipboard</button>
+    <script>
+    function copyToClipboard() {
+        const textArea = document.querySelector('textarea[data-testid="stTextArea"]');
+        if (textArea) {
+            textArea.select();
+            document.execCommand('copy');
+            alert('Text copied to clipboard!');
+        }
+    }
+    </script>
+    """, 
+    unsafe_allow_html=True
+)
