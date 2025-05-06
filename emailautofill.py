@@ -84,7 +84,7 @@ Just in regards to your appointment, here’s some additional information, and i
 
 {additional}
 - Our engineer will give 30 minutes notice before their arrival.
-- We’ll need someone over the age of 18 in the house throughout your appointment, even if your meter is located externally. This is so we can complete our safety checks inside your house before and after the installation or exchange.
+- We’ll need someone over the age of 18 in the house throughout your appointment, even if your meter is located externally. This is so we can complete our safety checks inside your house before we leave.
 - The engineer will need somewhere close by to park.
 - If there are any obstructions / if the engineer will need a ladder to reach your meters, please let us know. The maximum height our engineers can work at is 7.2ft.
 - If you have a dog, please ensure that it is securely kept away from the area where our engineer will be working.
@@ -99,8 +99,14 @@ Octopus Energy Services
 Feedback/Queries Email: hello@octoes.com
 """
 
-# Display the generated email in a text area
-st.text_area("Generated Email", value=email, height=400, key="email_text_area")
+        # Display the generated email in a text area with error handling
+        try:
+            st.text_area("Generated Email", value=email, height=400, key="email_text_area")
+        except NameError as e:
+            # Log the error for debugging purposes
+            st.error("An unexpected error occurred. Please try again later.")
+            with open("error.log", "a") as log_file:
+                log_file.write(f"Error: {str(e)}\n")
 
 # Add a "Copy to Clipboard" button using JavaScript
 st.markdown(
