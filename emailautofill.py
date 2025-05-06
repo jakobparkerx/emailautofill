@@ -109,22 +109,4 @@ Feedback/Queries Email: hello@octoes.com
             with open("error.log", "a") as log_file:
                 log_file.write(f"Error: {str(e)}\n")
 
-# Add a "Copy to Clipboard" button using JavaScript
-st.markdown(
-    """
-    <button onclick="copyToClipboard()">Copy to Clipboard</button>
-    <script>
-    function copyToClipboard() {
-        const textArea = document.querySelector('textarea[data-testid="stTextArea"]');
-        if (textArea) {
-            navigator.clipboard.writeText(textArea.value).then(() => {
-                alert('Copied to clipboard!');
-            }).catch(err => {
-                console.error('Failed to copy: ', err);
-            });
-        }
-    }
-    </script>
-    """, 
-    unsafe_allow_html=True
-)
+
