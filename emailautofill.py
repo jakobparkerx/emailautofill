@@ -10,7 +10,7 @@ st.title("Appointment Email Generator")
 appointment_date = st.date_input(
     "Select appointment date", 
     datetime.date(2025, 5, 6),
-    format="DD/MM/YYYY"
+    format="DD/MM/YYYY")
 time_slot = st.selectbox("Time Slot", ["AD (8am-5pm)", "AM (8am-12pm)", "PM (1pm-5pm)"])
 appointment_type = st.selectbox(
     "Appointment Type",
