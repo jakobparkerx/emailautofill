@@ -84,7 +84,7 @@ Just in regards to your appointment, here’s some additional information, and i
 
 {additional}
 - Our engineer will give 30 minutes notice before their arrival.
-- We’ll need someone over the age of 18 in the house throughout your appointment, even if your meter is located externally. This is so we can complete our safety checks inside your house before [...]
+- We’ll need someone over the age of 18 in the house throughout your appointment, even if your meter is located externally. This is so we can complete our safety checks inside your house before and after the work is completed. The person present doesn’t necessarily need to be the owner/occupier of the property. It can be a friend, neighbour or a family member.
 - The engineer will need somewhere close by to park.
 - If there are any obstructions / if the engineer will need a ladder to reach your meters, please let us know. The maximum height our engineers can work at is 7.2ft.
 - If you have a dog, please ensure that it is securely kept away from the area where our engineer will be working.
