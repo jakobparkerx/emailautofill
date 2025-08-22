@@ -86,8 +86,8 @@ Kind regards,
 """
 
 with tab2:
-    st.title("D-1 Email Generator 🚀")
-    st.write("This is where you can build another feature.")
+    st.title("D-1 Email Generator")
+
 
 
 
