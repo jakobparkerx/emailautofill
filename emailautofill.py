@@ -4,7 +4,6 @@ import logging
 
 logging.getLogger('streamlit').setLevel(logging.CRITICAL)
 
-
 tab1, tab2 = st.tabs(["Appointment Email", "D-1 Email"])
 
 with tab1:
@@ -16,21 +15,20 @@ with tab1:
         "Gas New Conn", "DF new conn", "On-Site comms"
     ]
 
-    date = st.date_input("Appointment date", datetime.date.today())
-    formatted_date = date.strftime('%d/%m/%Y')
-    st.write(f"Selected date (formatted): {formatted_date}")
+    date_tab1 = st.date_input("Appointment date", datetime.date.today(), key="appt_date_tab1")
+    formatted_date_tab1 = date_tab1.strftime('%d/%m/%Y')
+    st.write(f"Selected date (formatted): {formatted_date_tab1}")
 
-    time_slot = st.selectbox("Time slot", TIME_SLOTS)
-    appointment_type = st.selectbox("Appointment type", APPOINTMENT_TYPES)
-    your_name = st.text_input("Your name")
+    time_slot = st.selectbox("Time slot", TIME_SLOTS, key="time_slot_tab1")
+    appointment_type = st.selectbox("Appointment type", APPOINTMENT_TYPES, key="appt_type_tab1")
+    your_name_tab1 = st.text_input("Your name", key="your_name_tab1")
 
-    generate = st.button("Generate email")
+    generate = st.button("Generate email", key="generate_tab1")
 
     if generate:
-        if not your_name:
+        if not your_name_tab1:
             st.error("Please enter your name.")
         else:
-            # Mapping for time slots
             time_mapping = {
                 "AD": "8am - 5pm",
                 "AM": "8am - 12pm",
@@ -64,7 +62,7 @@ with tab1:
 
             email = f"""Hi,
 
-Thank you for speaking with me and I'm glad we could get you booked in for {appointment_desc}. As requested, we’ve booked your metering appointment for {formatted_date} between {time_value}.
+Thank you for speaking with me and I'm glad we could get you booked in for {appointment_desc}. As requested, we’ve booked your metering appointment for {formatted_date_tab1} between {time_value}.
 
 Just in regards to your appointment, here’s some additional information, and if any of these cause any issues, then give us a call or email.
 
@@ -78,28 +76,28 @@ Just in regards to your appointment, here’s some additional information, and i
 If you have any questions between now and your appointment, please email us at hello@octoes.com.
 
 Kind regards,  
-{your_name}
+{your_name_tab1}
 """
 
 with tab2:
     st.title("D-1 Email Generator")
 
-    date_tab2 = st.date_input("Appointment date", datetime.date.today())
-    formatted_date = date.strftime('%d/%m/%Y')
-    st.write(f"Selected date (formatted): {formatted_date}")
+    date_tab2 = st.date_input("Appointment date", datetime.date.today(), key="appt_date_tab2")
+    formatted_date_tab2 = date_tab2.strftime('%d/%m/%Y')
+    st.write(f"Selected date (formatted): {formatted_date_tab2}")
 
     time_range = st.slider(
         "Select your engineer arrival time range",
-         value=(datetime.time(9, 0), datetime.time(12, 0)),
-         step=datetime.timedelta(minutes=15),
-         format="HH:mm"
+        value=(datetime.time(9, 0), datetime.time(12, 0)),
+        step=datetime.timedelta(minutes=15),
+        format="HH:mm",
+        key="time_range_tab2"
     )
 
     start_time, end_time = time_range
     st.write(f"Selected: {start_time.strftime('%I:%M %p')} - {end_time.strftime('%I:%M %p')}")
 
-    your_name = st.text_input("Your name")
-
+    your_name_tab2 = st.text_input("Your name", key="your_name_tab2")
 
 
 
