@@ -111,7 +111,7 @@ with tab2:
         else:
             email_tab2 = f"""Hi,
 
-I hope you are well today. I'm reaching out regarding the upcoming metering appointment, which we currently have booked with you for {formatted_date_tab2}. Our engineer has let us know that they plan to attend between {start_time_tab2.strftime('%I:%M %p')} and {end_time_tab2.strftime('%I:%M %p')}. They will also give 30 minutes notice before their arrival.
+I hope you are well today. I'm reaching out regarding the upcoming metering appointment, which we currently have booked with you for {formatted_date_tab2}. Our engineer has let us know that they plan to attend between {start_time_tab2.strftime('%I:%M %p')} and {end_time_tab2.strftime('%I:%M %p')}.
 
 If you have any questions regarding this, please let me know!
 
@@ -119,6 +119,7 @@ Kind regards,
 {your_name_tab2}
 """
             st.markdown(f"```markdown\n{email_tab2}\n```")
+
 
 
 
