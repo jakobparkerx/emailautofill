@@ -86,13 +86,14 @@ with tab2:
 
     time_range = st.slider(
         "Select your appointment time range",
-         value=(dt.time(9, 0), dt.time(12, 0)),
-         step=dt.timedelta(minutes=15),
+         value=(datetime.time(9, 0), datetime.time(12, 0)),
+         step=datetime.timedelta(minutes=15),
          format="HH:mm"
     )
 
     start_time, end_time = time_range
     st.write(f"Selected: {start_time.strftime('%I:%M %p')} - {end_time.strftime('%I:%M %p')}")
+
 
 
 
