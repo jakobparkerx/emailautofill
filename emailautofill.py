@@ -84,8 +84,12 @@ Kind regards,
 with tab2:
     st.title("D-1 Email Generator")
 
+    date = st.date_input("Appointment date", datetime.date.today())
+    formatted_date = date.strftime('%d/%m/%Y')
+    st.write(f"Selected date (formatted): {formatted_date}")
+
     time_range = st.slider(
-        "Select your appointment time range",
+        "Select your engineer arrival time range",
          value=(datetime.time(9, 0), datetime.time(12, 0)),
          step=datetime.timedelta(minutes=15),
          format="HH:mm"
@@ -93,6 +97,9 @@ with tab2:
 
     start_time, end_time = time_range
     st.write(f"Selected: {start_time.strftime('%I:%M %p')} - {end_time.strftime('%I:%M %p')}")
+
+    your_name = st.text_input("Your name")
+
 
 
 
