@@ -84,7 +84,7 @@ Kind regards,
 with tab2:
     st.title("D-1 Email Generator")
 
-    date = st.date_input("Appointment date", datetime.date.today())
+    date_tab2 = st.date_input("Appointment date", datetime.date.today())
     formatted_date = date.strftime('%d/%m/%Y')
     st.write(f"Selected date (formatted): {formatted_date}")
 
@@ -99,6 +99,7 @@ with tab2:
     st.write(f"Selected: {start_time.strftime('%I:%M %p')} - {end_time.strftime('%I:%M %p')}")
 
     your_name = st.text_input("Your name")
+
 
 
 
