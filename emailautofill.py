@@ -10,14 +10,12 @@ tab1, tab2 = st.tabs(["Appointment Email", "D-1 Email"])
 with tab1:
     st.title("Appointment Email Generator")
 
-    # Constants for time slots and appointment types
     TIME_SLOTS = ["AD (8am - 5pm)", "AM (8am - 12pm)", "PM (1pm - 5pm)"]
     APPOINTMENT_TYPES = [
         "DF Mex", "Elec Mex", "Gas Mex", "Elec New Conn", 
         "Gas New Conn", "DF new conn", "On-Site comms"
     ]
 
-    # Date input with default value
     date = st.date_input("Appointment date", datetime.date.today())
     formatted_date = date.strftime('%d/%m/%Y')
     st.write(f"Selected date (formatted): {formatted_date}")
@@ -40,7 +38,6 @@ with tab1:
             }
             time_value = time_mapping.get(time_slot[:2], "a selected time")
 
-            # Mapping for appointment types
             appointment_mapping = {
                 "DF Mex": "a gas and electric meter exchange",
                 "Elec Mex": "an electric meter exchange",
@@ -51,7 +48,6 @@ with tab1:
                 "On-Site comms": "an on-site commissioning appointment for your smart meters"
             }
 
-            # Additional info
             additional_info = {
                 "DF Mex": "- Most jobs take around 2 hours (1 hour per meter). Your electricity and gas will need to be switched off for up to an hour.",
                 "Elec Mex": "- Most jobs take around 1 hour. Your electricity will need to be switched off for up to an hour.",
@@ -87,6 +83,10 @@ Kind regards,
 
 with tab2:
     st.title("D-1 Email Generator")
+
+start_time = st.time_input("Start time")
+end_time = st.time_input("End time")
+
 
 
 
