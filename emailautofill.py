@@ -84,13 +84,16 @@ Kind regards,
 with tab2:
     st.title("D-1 Email Generator")
 
-    col1, col2 = st.columns(2)
+    time_range = st.slider(
+        "Select your appointment time range",
+         value=(dt.time(9, 0), dt.time(12, 0)),
+         step=dt.timedelta(minutes=15),
+         format="HH:mm"
+    )
 
-    with col1:
-        start_time = st.time_input("Start time")
+    start_time, end_time = time_range
+    st.write(f"Selected: {start_time.strftime('%I:%M %p')} - {end_time.strftime('%I:%M %p')}")
 
-    with col2:
-        end_time = st.time_input("End time")
 
 
 
