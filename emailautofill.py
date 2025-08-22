@@ -17,13 +17,13 @@ with tab1:
         "Gas New Conn", "DF new conn", "On-Site comms"
     ]
 
-    date_tab1 = st.date_input("Appointment date (Tab 1)", datetime.date.today(), key="appt_date_tab1")
+    date_tab1 = st.date_input("Appointment date", datetime.date.today(), key="appt_date_tab1")
     formatted_date_tab1 = date_tab1.strftime('%d/%m/%Y')
     st.write(f"Selected date (formatted): {formatted_date_tab1}")
 
-    time_slot_tab1 = st.selectbox("Time slot (Tab 1)", TIME_SLOTS, key="time_slot_tab1")
-    appointment_type_tab1 = st.selectbox("Appointment type (Tab 1)", APPOINTMENT_TYPES, key="appt_type_tab1")
-    your_name_tab1 = st.text_input("Your name (Tab 1)", key="your_name_tab1")
+    time_slot_tab1 = st.selectbox("Time slot", TIME_SLOTS, key="time_slot_tab1")
+    appointment_type_tab1 = st.selectbox("Appointment type", APPOINTMENT_TYPES, key="appt_type_tab1")
+    your_name_tab1 = st.text_input("Your name", key="your_name_tab1")
 
     generate_tab1 = st.button("Generate Appointment Email", key="generate_tab1")
 
@@ -86,12 +86,12 @@ Kind regards,
 with tab2:
     st.title("D-1 Email Generator")
 
-    date_tab2 = st.date_input("Appointment date (Tab 2)", datetime.date.today(), key="appt_date_tab2")
+    date_tab2 = st.date_input("Appointment date", datetime.date.today(), key="appt_date_tab2")
     formatted_date_tab2 = date_tab2.strftime('%d/%m/%Y')
     st.write(f"Selected date (formatted): {formatted_date_tab2}")
 
     time_range_tab2 = st.slider(
-        "Select your engineer arrival time range (Tab 2)",
+        "Select your engineer arrival time range",
         value=(datetime.time(9, 0), datetime.time(12, 0)),
         step=datetime.timedelta(minutes=15),
         format="HH:mm",
@@ -101,7 +101,7 @@ with tab2:
     start_time_tab2, end_time_tab2 = time_range_tab2
     st.write(f"Selected: {start_time_tab2.strftime('%I:%M %p')} - {end_time_tab2.strftime('%I:%M %p')}")
 
-    your_name_tab2 = st.text_input("Your name (Tab 2)", key="your_name_tab2")
+    your_name_tab2 = st.text_input("Your name", key="your_name_tab2")
 
     generate_tab2 = st.button("Generate D-1 Email", key="generate_tab2")
 
@@ -119,6 +119,7 @@ Kind regards,
 {your_name_tab2}
 """
             st.markdown(f"```markdown\n{email_tab2}\n```")
+
 
 
 
