@@ -79,6 +79,10 @@ If you have any questions between now and your appointment, please email us at h
 
 Kind regards,  
 {your_name_tab1}
+
+Field Team Support Specialist
+Octopus Energy Services
+Feedback/Queries Email: hello@octoes.com
 """
             st.markdown(f"```markdown\n{email_tab1}\n```")
 
@@ -117,8 +121,12 @@ If you have any questions regarding this, please let me know!
 
 Kind regards,  
 {your_name_tab2}
+
+Octopus Energy Services
+Feedback/Queries Email: hello@octoes.com
 """
             st.markdown(f"```markdown\n{email_tab2}\n```")
+
 
 
 
