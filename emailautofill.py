@@ -84,13 +84,14 @@ Kind regards,
 with tab2:
     st.title("D-1 Email Generator")
 
-col1, col2 = st.columns(2)
+    col1, col2 = st.columns(2)
 
-with col1:
-    start_time = st.time_input("Start time")
+    with col1:
+        start_time = st.time_input("Start time")
 
-with col2:
-    end_time = st.time_input("End time")
+    with col2:
+        end_time = st.time_input("End time")
+
 
 
 
