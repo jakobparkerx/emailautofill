@@ -94,9 +94,31 @@ with tab2:
     formatted_date_tab2 = date_tab2.strftime('%d/%m/%Y')
     st.write(f"Selected date (formatted): {formatted_date_tab2}")
 
-    # Replace slider with start/end time input fields
-    start_time_tab2 = st.time_input("Engineer arrival - start time", datetime.time(9, 0), key="start_time_tab2")
-    end_time_tab2 = st.time_input("Engineer arrival - end time", datetime.time(12, 0), key="end_time_tab2")
+    # Generate time options between 08:00 and 18:00 in 15-min steps
+    def generate_time_options(start=datetime.time(8, 0), end=datetime.time(18, 0), step=15):
+        times = []
+        current = datetime.datetime.combine(datetime.date.today(), start)
+        end_dt = datetime.datetime.combine(datetime.date.today(), end)
+        while current <= end_dt:
+            times.append(current.time())
+            current += datetime.timedelta(minutes=step)
+        return times
+
+    TIME_OPTIONS = generate_time_options()
+
+    start_time_tab2 = st.selectbox(
+        "Engineer arrival - start time",
+        TIME_OPTIONS,
+        format_func=lambda t: t.strftime("%H:%M"),
+        key="start_time_tab2"
+    )
+
+    end_time_tab2 = st.selectbox(
+        "Engineer arrival - end time",
+        TIME_OPTIONS,
+        format_func=lambda t: t.strftime("%H:%M"),
+        key="end_time_tab2"
+    )
 
     your_name_tab2 = st.text_input("Your name", key="your_name_tab2")
 
@@ -105,6 +127,8 @@ with tab2:
     if generate_tab2:
         if not your_name_tab2:
             st.error("Please enter your name.")
+        elif end_time_tab2 <= start_time_tab2:
+            st.error("End time must be later than start time.")
         else:
             email_tab2 = f"""Hi,
 
@@ -120,11 +144,10 @@ Octopus Energy Services
 Feedback/Queries Email: hello@octoes.com
 """
 
-
             st.code(email_tab2, language="markdown")
 
             if st.button("✅ Copy Email"):
-                st.success("Email copied!")
+                st.success("Email copied! (double-check in your clipboard)")
 
 
 
