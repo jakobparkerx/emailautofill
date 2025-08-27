@@ -146,8 +146,19 @@ Feedback/Queries Email: hello@octoes.com
 
             st.code(email_tab2, language="markdown")
 
-            if st.button("✅ Copy Email"):
-                st.success("Email copied! (double-check in your clipboard)")
+            copy_js = f"""
+                <script>
+                function copyText() {{
+                    navigator.clipboard.writeText(`{email_tab2}`);
+                    var btn = document.getElementById("copy-btn");
+                    btn.innerText = "✅ Copied!";
+                    setTimeout(() => btn.innerText = "📋 Copy Email", 2000);
+                }}
+                </script>
+                <button id="copy-btn" onclick="copyText()">📋 Copy Email</button>
+            """
+            st.components.v1.html(copy_js, height=40)
+
 
 
 
