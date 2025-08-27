@@ -107,14 +107,14 @@ with tab2:
     TIME_OPTIONS = generate_time_options()
 
     start_time_tab2 = st.selectbox(
-        "Engineer arrival - start time",
+        "Engineer arrival - earliest time",
         TIME_OPTIONS,
         format_func=lambda t: t.strftime("%H:%M"),
         key="start_time_tab2"
     )
 
     end_time_tab2 = st.selectbox(
-        "Engineer arrival - end time",
+        "Engineer arrival - latest time",
         TIME_OPTIONS,
         format_func=lambda t: t.strftime("%H:%M"),
         key="end_time_tab2"
@@ -158,6 +158,7 @@ Feedback/Queries Email: hello@octoes.com
                 <button id="copy-btn" onclick="copyText()">📋 Copy Email</button>
             """
             st.components.v1.html(copy_js, height=40)
+
 
 
 
