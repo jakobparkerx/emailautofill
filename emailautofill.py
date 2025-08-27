@@ -94,16 +94,9 @@ with tab2:
     formatted_date_tab2 = date_tab2.strftime('%d/%m/%Y')
     st.write(f"Selected date (formatted): {formatted_date_tab2}")
 
-    time_range_tab2 = st.slider(
-        "Select your engineer arrival time range",
-        value=(datetime.time(9, 0), datetime.time(12, 0)),
-        step=datetime.timedelta(minutes=15),
-        format="HH:mm",
-        key="time_range_tab2"
-    )
-
-    start_time_tab2, end_time_tab2 = time_range_tab2
-    st.write(f"Selected: {start_time_tab2.strftime('%I:%M %p')} - {end_time_tab2.strftime('%I:%M %p')}")
+    # Replace slider with start/end time input fields
+    start_time_tab2 = st.time_input("Engineer arrival - start time", datetime.time(9, 0), key="start_time_tab2")
+    end_time_tab2 = st.time_input("Engineer arrival - end time", datetime.time(12, 0), key="end_time_tab2")
 
     your_name_tab2 = st.text_input("Your name", key="your_name_tab2")
 
@@ -126,8 +119,12 @@ Customer Support Specialist
 Octopus Energy Services
 Feedback/Queries Email: hello@octoes.com
 """
-            st.markdown(f"```markdown\n{email_tab2}\n```")
 
+
+            st.code(email_tab2, language="markdown")
+
+            if st.button("✅ Copy Email"):
+                st.success("Email copied!")
 
 
 
