@@ -143,9 +143,22 @@ Customer Support Specialist
 Octopus Energy Services
 Feedback/Queries Email: hello@octoes.com
 """
-            header_tab2 = f"""Your smart metering appointment reminder' - {formatted_date_tab2} - {start_time_tab2.strftime('%I:%M %p')} - {end_time_tab2.strftime('%I:%M %p')}"""
+            header_tab2 = f"""Your smart metering appointment reminder - {formatted_date_tab2} - {start_time_tab2.strftime('%I:%M %p')} - {end_time_tab2.strftime('%I:%M %p')}"""
 
             st.code(header_tab2, language="markdown")
+
+            copy_js = f"""
+                <script>
+                function copyText() {{
+                    navigator.clipboard.writeText(`{header_tab2}`);
+                    var btn = document.getElementById("copy-btn");
+                    btn.innerText = "✅ Copied!";
+                    setTimeout(() => btn.innerText = "📋 Copy Header", 2000);
+                }}
+                </script>
+                <button id="copy-btn" onclick="copyText()">📋 Copy Header</button>
+            """
+            st.components.v1.html(copy_js, height=40)
 
             st.code(email_tab2, language="markdown")
 
@@ -161,6 +174,7 @@ Feedback/Queries Email: hello@octoes.com
                 <button id="copy-btn" onclick="copyText()">📋 Copy Email</button>
             """
             st.components.v1.html(copy_js, height=40)
+
 
 
 
