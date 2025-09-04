@@ -86,10 +86,13 @@ Feedback/Queries Email: hello@octoes.com
 """
             st.markdown(f"```markdown\n{email_tab1}\n```")
 
+
+            st.code(email_tab1, language="markdown")
+
             copy_js = f"""
                 <script>
                 function copyText() {{
-                    navigator.clipboard.writeText(`{email_tab2}`);
+                    navigator.clipboard.writeText(`{email_tab1}`);
                     var btn = document.getElementById("copy-btn");
                     btn.innerText = "✅ Copied!";
                     setTimeout(() => btn.innerText = "📋 Copy Email", 2000);
@@ -98,6 +101,7 @@ Feedback/Queries Email: hello@octoes.com
                 <button id="copy-btn" onclick="copyText()">📋 Copy Email</button>
             """
             st.components.v1.html(copy_js, height=40)
+
 
 # ---------------- Tab 2: D-1 Email ----------------
 with tab2:
@@ -191,6 +195,7 @@ Feedback/Queries Email: hello@octoes.com
                 <button id="copy-btn" onclick="copyText()">📋 Copy Email</button>
             """
             st.components.v1.html(copy_js, height=40)
+
 
 
 
