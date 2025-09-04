@@ -13,7 +13,7 @@ with tab1:
     TIME_SLOTS = ["AD (8am - 5pm)", "AM (8am - 12pm)", "PM (1pm - 5pm)"]
     APPOINTMENT_TYPES = [
         "DF Mex", "Elec Mex", "Gas Mex", "Elec New Conn",
-        "Gas New Conn", "DF new conn", "On-Site comms"
+        "Gas New Conn", "DF new conn", "On-Site comms", "Other"
     ]
 
     date_tab1 = st.date_input("Appointment date", datetime.date.today(), key="appt_date_tab1")
@@ -44,7 +44,8 @@ with tab1:
                 "Elec New Conn": "an electric new connection",
                 "Gas New Conn": "a gas new connection",
                 "DF new conn": "a gas and electric new connection",
-                "On-Site comms": "an on-site commissioning appointment for your smart meters"
+                "On-Site comms": "an on-site commissioning appointment for your smart meters",
+                "Other": "a metering appointment"
             }
 
             additional_info = {
@@ -177,6 +178,7 @@ Feedback/Queries Email: hello@octoes.com
                 <button id="copy-btn" onclick="copyText()">📋 Copy Email</button>
             """
             st.components.v1.html(copy_js, height=40)
+
 
 
 
