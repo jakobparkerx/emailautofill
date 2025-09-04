@@ -109,7 +109,6 @@ with tab2:
     formatted_date_tab2 = date_tab2.strftime('%d/%m/%Y')
     st.write(f"Selected date (formatted): {formatted_date_tab2}")
 
-    # Generate time options between 08:00 and 18:00 in 15-min steps
     def generate_time_options(start=datetime.time(8, 0), end=datetime.time(18, 0), step=15):
         times = []
         current = datetime.datetime.combine(datetime.date.today(), start)
@@ -121,7 +120,6 @@ with tab2:
 
     TIME_OPTIONS = generate_time_options()
 
-    # Earliest time picker
     start_time_tab2 = st.selectbox(
         "Engineer arrival - earliest time",
         TIME_OPTIONS[:-1],  # exclude last slot since it can't have a +15 end time
@@ -129,10 +127,8 @@ with tab2:
         key="start_time_tab2"
     )
 
-    # End-time options: only times strictly after the selected start
     end_options = [t for t in TIME_OPTIONS if t > start_time_tab2]
 
-    # Default to the first valid end option (+15 mins)
     end_time_tab2 = st.selectbox(
         "Engineer arrival - latest time",
         end_options,
@@ -193,6 +189,7 @@ Feedback/Queries Email: hello@octoes.com
                 <button id="copy-btn" onclick="copyText()">📋 Copy Email</button>
             """
             st.components.v1.html(copy_js, height=40)
+
 
 
 
