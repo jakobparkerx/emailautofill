@@ -84,8 +84,6 @@ Customer Support Specialist
 Octopus Energy Services
 Feedback/Queries Email: hello@octoes.com
 """
-            st.markdown(f"```markdown\n{email_tab1}\n```")
-
 
             st.code(email_tab1, language="markdown")
 
@@ -195,6 +193,7 @@ Feedback/Queries Email: hello@octoes.com
                 <button id="copy-btn" onclick="copyText()">📋 Copy Email</button>
             """
             st.components.v1.html(copy_js, height=40)
+
 
 
 
