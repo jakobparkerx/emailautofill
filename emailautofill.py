@@ -105,21 +105,22 @@ with tab2:
 
     TIME_OPTIONS = generate_time_options()
 
+    # Earliest time picker
     start_time_tab2 = st.selectbox(
         "Engineer arrival - earliest time",
-        TIME_OPTIONS,
+        TIME_OPTIONS[:-1],  # exclude last slot since it can't have a +15 end time
         format_func=lambda t: t.strftime("%H:%M"),
         key="start_time_tab2"
     )
 
-    # figure out default end time (15 mins later)
-    start_index = TIME_OPTIONS.index(start_time_tab2)
-    default_end_index = min(start_index + 1, len(TIME_OPTIONS) - 1)
+    # End-time options: only times strictly after the selected start
+    end_options = [t for t in TIME_OPTIONS if t > start_time_tab2]
 
+    # Default to the first valid end option (+15 mins)
     end_time_tab2 = st.selectbox(
         "Engineer arrival - latest time",
-        TIME_OPTIONS,
-        index=default_end_index,
+        end_options,
+        index=0,
         format_func=lambda t: t.strftime("%H:%M"),
         key="end_time_tab2"
     )
@@ -131,8 +132,6 @@ with tab2:
     if generate_tab2:
         if not your_name_tab2:
             st.error("Please enter your name.")
-        elif end_time_tab2 <= start_time_tab2:
-            st.error("End time must be later than start time.")
         else:
             email_tab2 = f"""Hi,
 
