@@ -4,7 +4,6 @@ import logging
 
 logging.getLogger('streamlit').setLevel(logging.CRITICAL)
 
-# Create two tabs
 tab1, tab2 = st.tabs(["Appointment Email", "D-1 Email"])
 
 # ---------------- Tab 1: Appointment Email ----------------
@@ -113,9 +112,14 @@ with tab2:
         key="start_time_tab2"
     )
 
+    # figure out default end time (15 mins later)
+    start_index = TIME_OPTIONS.index(start_time_tab2)
+    default_end_index = min(start_index + 1, len(TIME_OPTIONS) - 1)
+
     end_time_tab2 = st.selectbox(
         "Engineer arrival - latest time",
         TIME_OPTIONS,
+        index=default_end_index,
         format_func=lambda t: t.strftime("%H:%M"),
         key="end_time_tab2"
     )
@@ -174,6 +178,7 @@ Feedback/Queries Email: hello@octoes.com
                 <button id="copy-btn" onclick="copyText()">📋 Copy Email</button>
             """
             st.components.v1.html(copy_js, height=40)
+
 
 
 
